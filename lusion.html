@@ -1,4 +1,4 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -367,6 +367,206 @@ DOCTYPE html>
     .servicio-card.featured li { color: var(--bg); border-color: rgba(10, 22, 40, 0.2); }
     .servicio-card li::before { content: "→"; color: var(--accent); }
     .servicio-card.featured li::before { color: var(--bg); }
+
+    /* ============ Casos / mockups ============ */
+    .casos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    @media (max-width: 980px) { .casos-grid { grid-template-columns: 1fr; } }
+
+    .tool-card {
+      display: flex; flex-direction: column; gap: 1.6rem;
+    }
+    .tool-card .tool-info { padding: 0 0.5rem; }
+    .tool-card .tool-info h3 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.4rem, 2vw, 1.7rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 0.7rem;
+    }
+    .tool-card .tool-info p { color: var(--ink-muted); font-size: 0.95rem; max-width: 480px; }
+    .tool-card .tool-eyebrow {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); font-weight: 500;
+      display: block; margin-bottom: 0.8rem;
+    }
+
+    .window {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5);
+      transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease), border-color 0.6s var(--ease);
+    }
+    .tool-card:hover .window {
+      transform: translateY(-6px);
+      border-color: rgba(56, 189, 248, 0.4);
+      box-shadow: 0 40px 80px -20px rgba(56, 189, 248, 0.2);
+    }
+    .window-bar {
+      height: 38px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; padding: 0 1rem; gap: 0.8rem;
+    }
+    .dots { display: flex; gap: 0.4rem; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; opacity: 0.7; }
+    .dot-r { background: #FF6B6B; }
+    .dot-y { background: #FDB84B; }
+    .dot-g { background: var(--accent-2); }
+    .window-title {
+      flex: 1; text-align: center;
+      font-size: 0.72rem; color: var(--ink-faint);
+      font-family: ui-monospace, 'Cascadia Code', monospace;
+      letter-spacing: 0.05em;
+    }
+    .window-body { padding: 1.2rem; min-height: 300px; }
+
+    /* Excel mock */
+    .excel-body { padding: 0; }
+    .excel-row {
+      display: grid;
+      grid-template-columns: 50px 1.4fr 1fr 0.8fr;
+      border-bottom: 1px solid var(--line);
+    }
+    .excel-row:last-child { border-bottom: none; }
+    .excel-cell {
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+      border-right: 1px solid var(--line);
+      display: flex; align-items: center;
+      font-family: 'Inter', sans-serif;
+    }
+    .excel-cell:last-child { border-right: none; }
+    .excel-row.excel-header .excel-cell {
+      background: rgba(248, 250, 252, 0.03);
+      color: var(--ink-faint);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 0.7rem 1rem;
+    }
+    .excel-cell.idx {
+      background: rgba(248, 250, 252, 0.02);
+      color: var(--ink-faint);
+      font-size: 0.7rem;
+      justify-content: center;
+    }
+    .excel-cell.up { color: var(--accent-2); }
+    .excel-cell .val {
+      opacity: 0;
+      animation: cellIn 0.5s var(--ease-out) forwards;
+    }
+    .tool-card.visible .excel-row:nth-child(2) .val { animation-delay: 0.3s; }
+    .tool-card.visible .excel-row:nth-child(3) .val { animation-delay: 0.5s; }
+    .tool-card.visible .excel-row:nth-child(4) .val { animation-delay: 0.7s; }
+    .tool-card.visible .excel-row:nth-child(5) .val { animation-delay: 0.9s; }
+    @keyframes cellIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+    .ai-cell {
+      position: relative;
+      background: rgba(56, 189, 248, 0.08) !important;
+      color: var(--ink) !important;
+      font-weight: 500;
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+    .ai-badge {
+      position: absolute;
+      top: -9px; left: 8px;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 3px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+    }
+    .ai-pulse {
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      pointer-events: none;
+      box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.5);
+      animation: aiPulse 2.4s ease-out infinite;
+    }
+    @keyframes aiPulse {
+      0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
+      80%, 100% { box-shadow: 0 0 0 12px rgba(56, 189, 248, 0); }
+    }
+
+    /* Dashboard mock */
+    .dash-body { padding: 1.4rem; }
+    .dash-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+    .dash-stat {
+      background: rgba(248, 250, 252, 0.03);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 1rem;
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .dash-stat .dash-label {
+      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink-faint); font-weight: 500;
+    }
+    .dash-stat .dash-num {
+      font-family: 'Fraunces', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .dash-stat .dash-trend {
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      color: var(--accent-2);
+      font-weight: 500;
+    }
+    .dash-stat .dash-trend.down { color: #FF6B6B; }
+    .dash-chart {
+      grid-column: span 2;
+      background: rgba(248, 250, 252, 0.03);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 1rem;
+      display: flex; align-items: flex-end; gap: 6px;
+      height: 110px;
+      position: relative;
+    }
+    .dash-chart::before {
+      content: "Últimos 7 días";
+      position: absolute; top: 0.7rem; left: 1rem;
+      font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+    .bar {
+      flex: 1;
+      background: linear-gradient(180deg, var(--accent), var(--accent-2));
+      border-radius: 2px 2px 0 0;
+      height: 0;
+      transition: height 1s var(--ease-out);
+      opacity: 0.85;
+    }
+    .tool-card.visible .bar { height: var(--h); }
+    .tool-card.visible .bar:nth-child(1) { transition-delay: 0.2s; }
+    .tool-card.visible .bar:nth-child(2) { transition-delay: 0.3s; }
+    .tool-card.visible .bar:nth-child(3) { transition-delay: 0.4s; }
+    .tool-card.visible .bar:nth-child(4) { transition-delay: 0.5s; }
+    .tool-card.visible .bar:nth-child(5) { transition-delay: 0.6s; }
+    .tool-card.visible .bar:nth-child(6) { transition-delay: 0.7s; }
+    .tool-card.visible .bar:nth-child(7) { transition-delay: 0.8s; }
 
     /* ============ Áreas ============ */
     .areas-list { margin-top: 3rem; }
@@ -765,12 +965,122 @@ DOCTYPE html>
     </div>
   </section>
 
+  <!-- ===== Casos / mockups ===== -->
+  <section id="casos">
+    <div class="wrap">
+      <div class="row reveal">
+        <div>
+          <div class="section-num"><span class="meta">05 — En la práctica</span></div>
+          <h2>Cómo se ve la IA en tu <span class="it">día a día</span>.</h2>
+        </div>
+        <div>
+          <p style="font-size: 1.1rem; color: var(--ink); max-width: 520px;">
+            No es una caja negra. Son las herramientas que ya conoces — Excel, documentos, dashboards — funcionando más rápido y con más cabeza.
+          </p>
+        </div>
+      </div>
+
+      <div class="casos-grid">
+
+        <!-- Excel mockup -->
+        <div class="tool-card reveal">
+          <div class="window">
+            <div class="window-bar">
+              <div class="dots"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span></div>
+              <div class="window-title">ventas-2026.xlsx</div>
+            </div>
+            <div class="window-body excel-body">
+              <div class="excel-row excel-header">
+                <div class="excel-cell idx"></div>
+                <div class="excel-cell">Trimestre</div>
+                <div class="excel-cell">Ingresos</div>
+                <div class="excel-cell">Var.</div>
+              </div>
+              <div class="excel-row">
+                <div class="excel-cell idx">1</div>
+                <div class="excel-cell"><span class="val">Q1</span></div>
+                <div class="excel-cell"><span class="val">$ 12.4M</span></div>
+                <div class="excel-cell up"><span class="val">+8%</span></div>
+              </div>
+              <div class="excel-row">
+                <div class="excel-cell idx">2</div>
+                <div class="excel-cell"><span class="val">Q2</span></div>
+                <div class="excel-cell"><span class="val">$ 14.1M</span></div>
+                <div class="excel-cell up"><span class="val">+13%</span></div>
+              </div>
+              <div class="excel-row">
+                <div class="excel-cell idx">3</div>
+                <div class="excel-cell"><span class="val">Q3</span></div>
+                <div class="excel-cell"><span class="val">$ 13.8M</span></div>
+                <div class="excel-cell up"><span class="val">+11%</span></div>
+              </div>
+              <div class="excel-row">
+                <div class="excel-cell idx">4</div>
+                <div class="excel-cell"><span class="val">Total año</span></div>
+                <div class="excel-cell ai-cell">
+                  <span class="ai-badge">✦ IA</span>
+                  <span class="val">$ 54.8M</span>
+                  <span class="ai-pulse"></span>
+                </div>
+                <div class="excel-cell up"><span class="val">+12%</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="tool-info">
+            <span class="tool-eyebrow">Excel · Hojas de cálculo</span>
+            <h3>Fórmulas y análisis en lenguaje natural.</h3>
+            <p>Pregúntale a tu planilla "¿cuál fue el mejor trimestre?" y obtén el resultado al instante — con la fórmula explicada, sin tener que recordarla.</p>
+          </div>
+        </div>
+
+        <!-- Dashboard mockup -->
+        <div class="tool-card reveal">
+          <div class="window">
+            <div class="window-bar">
+              <div class="dots"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span></div>
+              <div class="window-title">dashboard · tiempo real</div>
+            </div>
+            <div class="window-body dash-body">
+              <div class="dash-grid">
+                <div class="dash-stat">
+                  <span class="dash-label">Leads activos</span>
+                  <span class="dash-num" data-target="247" data-decimals="0">0</span>
+                  <span class="dash-trend">↗ +18% vs semana</span>
+                </div>
+                <div class="dash-stat">
+                  <span class="dash-label">Conversión</span>
+                  <span class="dash-num" data-target="12.4" data-decimals="1">0</span>
+                  <span class="dash-trend">↗ +3.2 pts</span>
+                </div>
+                <div class="dash-chart">
+                  <div class="bar" style="--h: 35%"></div>
+                  <div class="bar" style="--h: 55%"></div>
+                  <div class="bar" style="--h: 42%"></div>
+                  <div class="bar" style="--h: 70%"></div>
+                  <div class="bar" style="--h: 60%"></div>
+                  <div class="bar" style="--h: 88%"></div>
+                  <div class="bar" style="--h: 75%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tool-info">
+            <span class="tool-eyebrow">Reportes · Dashboards</span>
+            <h3>Métricas que se actualizan solas.</h3>
+            <p>Conecta tus datos una vez y la IA arma reportes diarios y dashboards en vivo que cualquier persona del equipo puede leer.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ===== Áreas ===== -->
   <section id="areas">
     <div class="wrap">
       <div class="row reveal">
         <div>
-          <div class="section-num"><span class="meta">05 — Áreas</span></div>
+          <div class="section-num"><span class="meta">06 — Áreas</span></div>
           <h2>IA aplicada al <span class="it-soft">trabajo real</span>.</h2>
         </div>
         <div>
@@ -838,7 +1148,7 @@ DOCTYPE html>
     <div class="wrap">
       <div class="row reveal">
         <div>
-          <div class="section-num"><span class="meta">06 — Estudio</span></div>
+          <div class="section-num"><span class="meta">07 — Estudio</span></div>
           <h2>Empezamos con un equipo que <span class="it-soft">no se atrevía</span>.</h2>
         </div>
         <div class="sobre-text">
@@ -855,7 +1165,7 @@ DOCTYPE html>
     <div class="wrap">
       <div class="row reveal">
         <div>
-          <div class="section-num"><span class="meta">07 — Preguntas</span></div>
+          <div class="section-num"><span class="meta">08 — Preguntas</span></div>
           <h2>Lo que más nos <span class="it">preguntan</span>.</h2>
         </div>
         <div></div>
@@ -890,7 +1200,7 @@ DOCTYPE html>
   <section class="contacto" id="contacto">
     <div class="wrap">
       <div class="reveal">
-        <div class="section-num"><span class="meta">08 — Conversemos</span></div>
+        <div class="section-num"><span class="meta">09 — Conversemos</span></div>
         <h2 class="contacto-h">Empieza con un <span class="it">diagnóstico</span> gratuito.</h2>
       </div>
 
@@ -988,11 +1298,28 @@ DOCTYPE html>
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          entry.target.querySelectorAll('[data-target]').forEach(animateCount);
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    function animateCount(el) {
+      if (el.dataset.counted) return;
+      el.dataset.counted = '1';
+      const target = parseFloat(el.dataset.target);
+      const decimals = parseInt(el.dataset.decimals || '0', 10);
+      const duration = 1600;
+      const start = performance.now();
+      function step(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = (target * eased).toFixed(decimals);
+        if (t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
 
     /* ===== Nav scroll ===== */
     const nav = document.getElementById('nav');
