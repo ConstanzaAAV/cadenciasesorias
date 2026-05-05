@@ -800,7 +800,7 @@
 
   <!-- ============ HERO + VIDEO ============ -->
   <div class="index-wrapper">
-    <video class="bg-video" id="bgVideo" muted playsinline preload="auto">
+    <video class="bg-video" id="bgVideo" autoplay muted loop playsinline preload="auto" disablepictureinpicture x-webkit-airplay="deny" webkit-playsinline>
       <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_065045_c44942da-53c6-4804-b734-f9e07fc22e08.mp4" type="video/mp4" />
     </video>
 
@@ -1314,10 +1314,12 @@
         }
         raf = requestAnimationFrame(tick);
       }
-      video.addEventListener('loadedmetadata', () => {
+      function tryPlay() {
         const p = video.play();
         if (p && typeof p.catch === 'function') p.catch(() => {});
-      });
+      }
+      video.addEventListener('loadedmetadata', tryPlay);
+      video.addEventListener('canplay', tryPlay);
       video.addEventListener('play', () => { if (raf) cancelAnimationFrame(raf); tick(); });
       video.addEventListener('ended', () => {
         resetting = true;
@@ -1325,11 +1327,22 @@
         setTimeout(() => {
           video.currentTime = 0;
           resetting = false;
-          const p = video.play();
-          if (p && typeof p.catch === 'function') p.catch(() => {});
+          tryPlay();
         }, 100);
       });
-      if (video.readyState >= 1) video.dispatchEvent(new Event('loadedmetadata'));
+
+      // Fallback: si el navegador bloqueó autoplay, intenta al primer toque/clic
+      const userGesture = () => {
+        if (video.paused) tryPlay();
+        document.removeEventListener('touchstart', userGesture);
+        document.removeEventListener('click', userGesture);
+        document.removeEventListener('scroll', userGesture);
+      };
+      document.addEventListener('touchstart', userGesture, { once: true, passive: true });
+      document.addEventListener('click', userGesture, { once: true });
+      document.addEventListener('scroll', userGesture, { once: true, passive: true });
+
+      if (video.readyState >= 1) tryPlay();
     })();
 
     /* ===== Custom cursor ===== */
