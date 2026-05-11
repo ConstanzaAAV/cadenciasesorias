@@ -602,52 +602,114 @@
     }
     .servicio-card.featured .servicio-price .from { color: rgba(245, 240, 232, 0.55); }
 
-    /* ============ En la práctica (process visuals) ============ */
-    .en-practica { background: var(--cream); }
+    /* ============ En la práctica (sección destacada) ============ */
+    .en-practica {
+      background:
+        radial-gradient(ellipse 70% 50% at 20% 0%, rgba(233, 128, 116, 0.10), transparent 60%),
+        radial-gradient(ellipse 60% 50% at 90% 100%, rgba(201, 151, 69, 0.08), transparent 60%),
+        var(--cream);
+      padding: clamp(7rem, 14vw, 12rem) 0;
+      position: relative;
+    }
+    .en-practica::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--coral), transparent);
+      opacity: 0.4;
+    }
+    .practica-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.45rem 1.1rem;
+      background: rgba(233, 128, 116, 0.12);
+      border: 1px solid rgba(233, 128, 116, 0.3);
+      border-radius: 999px;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--coral);
+      margin-bottom: 1.5rem;
+    }
+    .practica-eyebrow .dot {
+      width: 6px; height: 6px;
+      background: var(--coral);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .en-practica h2 {
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      max-width: 16ch;
+    }
     .practica-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.4rem;
-      margin-top: clamp(2.5rem, 5vw, 4rem);
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(1.6rem, 3vw, 2.4rem);
+      margin-top: clamp(3.5rem, 6vw, 5rem);
     }
-    @media (max-width: 980px) { .practica-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 540px) { .practica-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 700px) { .practica-grid { grid-template-columns: 1fr; } }
 
     .practica-card {
       background: var(--cream-soft);
       border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 1.5rem;
+      border-radius: 24px;
+      padding: 2rem;
       display: flex; flex-direction: column;
-      transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.5s var(--ease), border-color 0.5s var(--ease), box-shadow 0.5s var(--ease), background 0.5s var(--ease);
+    }
+    .practica-card::after {
+      content: "";
+      position: absolute;
+      top: 0; right: 0;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle at top right, rgba(233, 128, 116, 0.12), transparent 70%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.5s var(--ease);
     }
     .practica-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
-      box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.2);
+      transform: translateY(-8px);
+      border-color: var(--coral);
+      box-shadow: 0 40px 80px -30px rgba(233, 128, 116, 0.35);
     }
+    .practica-card:hover::after { opacity: 1; }
     .practica-card-img {
       width: 100%;
       aspect-ratio: 16 / 10;
-      object-fit: contain;
+      object-fit: cover;
       background: linear-gradient(135deg, #F5F5F7 0%, #EAECEF 100%);
-      border-radius: 12px;
-      padding: 0.8rem;
-      margin-bottom: 1.2rem;
+      border-radius: 16px;
+      margin-bottom: 1.6rem;
       display: block;
+      overflow: hidden;
+      transition: transform 0.5s var(--ease);
+    }
+    video.practica-card-img { background: #000; }
+    .practica-card:hover .practica-card-img { transform: scale(1.03); }
+    .practica-card-num {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--coral);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
     }
     .practica-card h4 {
       font-family: 'Fraunces', serif;
-      font-size: 1.1rem;
+      font-size: clamp(1.4rem, 2.2vw, 1.8rem);
       font-weight: 500;
       color: var(--ink);
-      margin-bottom: 0.35rem;
-      letter-spacing: -0.01em;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
     }
     .practica-card p {
-      font-size: 0.88rem;
+      font-size: 1rem;
       color: var(--ink-soft);
-      line-height: 1.4;
+      line-height: 1.55;
     }
 
     /* ============ Auto hero image (cubo2 in Automatización header) ============ */
@@ -739,39 +801,41 @@
     }
     .auto-applies-list span:hover { background: var(--coral-soft); border-color: var(--coral); }
 
-    /* Partner card */
+    /* Partner card — fondo blanco con acentos coral */
     .partner-card {
       margin-top: 4rem;
       padding: clamp(1.8rem, 3vw, 2.8rem);
-      background: linear-gradient(135deg, var(--coral-soft), rgba(232, 177, 78, 0.1));
+      background: #FFFFFF;
       border: 1px solid var(--coral);
       border-radius: 16px;
       position: relative;
+      box-shadow: 0 30px 60px -25px rgba(233, 128, 116, 0.35);
     }
     .partner-tag {
       font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
       color: var(--coral-deep); font-weight: 600;
       margin-bottom: 0.8rem;
     }
-    .partner-card h3 { color: var(--ink); margin-bottom: 1rem; font-size: clamp(1.4rem, 2.4vw, 2rem); }
-    .partner-card > p { color: var(--ink-soft); font-size: 1rem; max-width: 720px; margin-bottom: 1.8rem; line-height: 1.6; }
+    .partner-card h3 { color: #1D1D1F; margin-bottom: 1rem; font-size: clamp(1.4rem, 2.4vw, 2rem); }
+    .partner-card h3 .it-soft { color: var(--coral); }
+    .partner-card > p { color: #3A3A3D; font-size: 1rem; max-width: 720px; margin-bottom: 1.8rem; line-height: 1.6; }
     .partner-modes {
       display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem;
-      padding-top: 1.5rem; border-top: 1px solid rgba(184, 88, 66, 0.2);
+      padding-top: 1.5rem; border-top: 1px solid rgba(233, 128, 116, 0.25);
     }
     @media (max-width: 820px) { .partner-modes { grid-template-columns: 1fr; } }
     .partner-mode strong {
-      display: block; color: var(--ink);
-      font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 400;
+      display: block; color: #1D1D1F;
+      font-family: 'Fraunces', serif; font-size: 1.05rem; font-weight: 500;
       margin-bottom: 0.4rem;
     }
-    .partner-mode span { color: var(--ink-soft); font-size: 0.88rem; line-height: 1.5; }
+    .partner-mode span { color: #4A4A4D; font-size: 0.88rem; line-height: 1.5; }
     .partner-note {
       margin-top: 1.5rem; padding-top: 1.2rem;
-      border-top: 1px solid rgba(184, 88, 66, 0.2);
-      font-size: 0.78rem; color: var(--ink-faint); line-height: 1.5;
+      border-top: 1px solid rgba(233, 128, 116, 0.25);
+      font-size: 0.78rem; color: #6A6A6D; line-height: 1.5;
     }
-    .partner-note a { color: var(--coral-deep); text-decoration: underline; text-decoration-color: rgba(184, 88, 66, 0.3); text-underline-offset: 3px; }
+    .partner-note a { color: var(--coral-deep); text-decoration: underline; text-decoration-color: rgba(233, 128, 116, 0.5); text-underline-offset: 3px; }
 
     /* ============ Áreas ============ */
     .areas { background: var(--cream); }
@@ -992,20 +1056,39 @@
       font-size: clamp(2.4rem, 5.5vw, 4.8rem);
       line-height: 1.05;
       letter-spacing: -0.025em;
-      color: var(--ink);
+      color: #1D1D1F;
       margin-bottom: 1.4rem;
     }
     .cta-atm-title .it {
       font-style: italic;
       font-weight: 300;
-      color: var(--coral);
+      color: var(--coral-deep);
     }
     .cta-atm-sub {
       font-size: clamp(1.05rem, 1.3vw, 1.2rem);
-      color: var(--ink-soft);
+      color: #4A4A4D;
       margin: 0 auto 2.5rem;
       max-width: 520px;
       line-height: 1.5;
+    }
+    /* Botones dentro del CTA atmosférico (fondo claro) */
+    .cta-atmospheric .btn-atm-primary {
+      background: #1D1D1F;
+      color: #FFFFFF;
+    }
+    .cta-atmospheric .btn-atm-primary:hover {
+      background: var(--coral-deep);
+      color: #FFFFFF;
+    }
+    .cta-atmospheric .btn-atm-ghost {
+      background: rgba(255, 255, 255, 0.85);
+      color: #1D1D1F;
+      border: 1px solid rgba(29, 29, 31, 0.25);
+    }
+    .cta-atmospheric .btn-atm-ghost:hover {
+      background: #FFFFFF;
+      border-color: #1D1D1F;
+      color: #1D1D1F;
     }
 
     /* ============ Contacto ============ */
@@ -1428,7 +1511,7 @@
     .cinema-title {
       font-family: 'Instrument Serif', serif;
       font-weight: 400;
-      color: var(--cream-soft);
+      color: #FFFFFF;
       font-size: clamp(2.6rem, 7vw, 5.5rem);
       line-height: 1.05;
       letter-spacing: -0.015em;
@@ -1494,14 +1577,22 @@
       margin-top: 0.4rem;
     }
     .cinema-cta {
-      padding: 0.75rem 2rem;
+      padding: 0.95rem 2.2rem;
       border-radius: 999px;
-      color: var(--cream-soft);
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: background 0.3s var(--ease);
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      font-size: 0.98rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
     }
-    .cinema-cta:hover { background: rgba(255,255,255,0.05); }
+    .cinema-cta:hover {
+      background: var(--coral);
+      border-color: var(--coral);
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
 
     .cinema-social {
       position: relative;
@@ -1573,11 +1664,12 @@
       <button class="menu-toggle" id="menuToggle" aria-label="Menú">☰</button>
       <div class="nav-links" id="navLinks">
         <a href="#problema">Desafío</a>
-        <a href="#proceso">Proceso</a>
+        <a href="#practica">En la práctica</a>
         <a href="#servicios">Servicios</a>
         <a href="#automatizacion">Automatización</a>
         <a href="#faq">Preguntas</a>
-        <a href="#contacto" class="cta">Hablemos →</a>
+        <a href="#cta-final">Diagnóstico</a>
+        <a href="#contacto" class="cta">Conversemos →</a>
       </div>
     </div>
   </nav>
@@ -1615,49 +1707,12 @@
       </div>
     </div>
 
-    <div class="cinema-social" aria-label="Redes sociales">
-      <a href="#" class="cinema-social-btn liquid-glass" aria-label="Instagram">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-      </a>
-      <a href="#" class="cinema-social-btn liquid-glass" aria-label="LinkedIn">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
-      </a>
-      <a href="#" class="cinema-social-btn liquid-glass" aria-label="Sitio web">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+    <div class="cinema-social" aria-label="Contacto">
+      <a href="mailto:cadenciasesorias@gmail.com" class="cinema-social-btn liquid-glass" aria-label="Email">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
       </a>
     </div>
   </header>
-
-  <!-- ============ LOGO STRIP (social proof) ============ -->
-  <section class="logo-strip">
-    <div class="wrap">
-      <div class="logo-strip-title">Confían en nosotros</div>
-      <div class="logo-strip-row">
-        <span class="logo-strip-item"><span class="logo-strip-mark">V</span>Vortex</span>
-        <span class="logo-strip-item"><span class="logo-strip-mark">N</span>Nimbus</span>
-        <span class="logo-strip-item"><span class="logo-strip-mark">P</span>Prysma</span>
-        <span class="logo-strip-item"><span class="logo-strip-mark">C</span>Cirrus</span>
-        <span class="logo-strip-item"><span class="logo-strip-mark">K</span>Kynder</span>
-        <span class="logo-strip-item"><span class="logo-strip-mark">H</span>Halcyn</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ MARQUEE ============ -->
-  <div class="marquee">
-    <div class="marquee-track">
-      <span class="marquee-item">IA <span class="it">aplicada</span></span>
-      <span class="marquee-item">Capacitación <span class="it">a medida</span></span>
-      <span class="marquee-item">Sin <span class="it">tecnicismos</span></span>
-      <span class="marquee-item">Equipos <span class="it">reales</span></span>
-      <span class="marquee-item">Procesos <span class="it">reales</span></span>
-      <span class="marquee-item">IA <span class="it">aplicada</span></span>
-      <span class="marquee-item">Capacitación <span class="it">a medida</span></span>
-      <span class="marquee-item">Sin <span class="it">tecnicismos</span></span>
-      <span class="marquee-item">Equipos <span class="it">reales</span></span>
-      <span class="marquee-item">Procesos <span class="it">reales</span></span>
-    </div>
-  </div>
 
   <!-- ============ PROBLEMA (image + text feature) ============ -->
   <section class="problema" id="problema">
@@ -1665,7 +1720,7 @@
       <div class="problema-grid reveal">
         <div>
           <div class="section-num"><span class="meta">01 — Desafío</span></div>
-          <h2>Tu equipo tiene <span class="it-soft">experiencia</span>.<br/>La IA tiene <span class="it">velocidad</span>.</h2>
+          <h2>Tú tienes la <span class="it-soft">experiencia</span>,<br/>la IA tiene <span class="it">velocidad</span>.</h2>
           <p style="margin-top: 1.5rem;">El problema no es que tu equipo no quiera adoptar IA. Es que nadie les enseñó cómo, ni en qué procesos conviene usarla. Empezar por cuenta propia, además, da vergüenza.</p>
           <blockquote class="pull-quote">
             Nuestro trabajo es que esa <span class="it">experiencia</span> y esa <span class="it">velocidad</span> vayan al mismo paso — sin que nadie sienta que va atrás.
@@ -1678,12 +1733,58 @@
     </div>
   </section>
 
+  <!-- ============ EN LA PRÁCTICA (sección destacada) ============ -->
+  <section class="en-practica" id="practica">
+    <div class="wrap">
+      <div class="row reveal">
+        <div>
+          <span class="practica-eyebrow"><span class="dot"></span>02 — En la práctica</span>
+          <h2>La IA en tu<br/><span class="it">día a día</span>.</h2>
+        </div>
+        <div>
+          <p style="font-size: 1.15rem; color: var(--ink); max-width: 540px; line-height: 1.6;">
+            Las herramientas que ya conoces — Excel, dashboards, reportes — funcionando más rápido y con más cabeza. Estos son los casos donde la IA se nota desde el primer día.
+          </p>
+        </div>
+      </div>
+
+      <div class="practica-grid reveal">
+        <article class="practica-card">
+          <video class="practica-card-img" autoplay muted loop playsinline>
+            <source src="dashboard-animation.mp4" type="video/mp4" />
+          </video>
+          <span class="practica-card-num">/ caso 01</span>
+          <h4>Dashboards en vivo</h4>
+          <p>Métricas que se actualizan solas, alertas automáticas cuando algo se sale de rango y vistas a la medida de cada área.</p>
+        </article>
+        <article class="practica-card">
+          <img src="prompt.webp" alt="Prompts inteligentes" class="practica-card-img" />
+          <span class="practica-card-num">/ caso 02</span>
+          <h4>Prompts inteligentes</h4>
+          <p>Pregúntale a tu data en lenguaje natural y obtén respuestas con contexto. Sin fórmulas, sin tablas dinámicas.</p>
+        </article>
+        <article class="practica-card">
+          <img src="power-automate-types.png" alt="Tendencias automáticas con Power Automate" class="practica-card-img" />
+          <span class="practica-card-num">/ caso 03</span>
+          <h4>Tendencias automáticas</h4>
+          <p>Patrones detectados al instante en tus ventas, costos o tickets de soporte. Decisiones con datos, no con corazonadas.</p>
+        </article>
+        <article class="practica-card">
+          <img src="excelIA.jpg" alt="Excel con IA" class="practica-card-img" />
+          <span class="practica-card-num">/ caso 04</span>
+          <h4>Excel + IA</h4>
+          <p>Fórmulas en lenguaje natural, limpieza automática de datos y reportes que se arman solos cada mes.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ SERVICIOS ============ -->
   <section id="servicios">
     <div class="wrap">
       <div class="row-narrow reveal">
         <div>
-          <div class="section-num"><span class="meta">02 — Servicios</span></div>
+          <div class="section-num"><span class="meta">03 — Servicios</span></div>
           <h2>Tres formas<br/>de <span class="it">empezar</span>.</h2>
         </div>
         <div>
@@ -1696,22 +1797,21 @@
       <div class="servicios-grid">
         <div class="servicio-card reveal">
           <span class="servicio-num">01</span>
-          <span class="servicio-tag">Línea B · Por sesión</span>
-          <h3>Asesoría de Procesos IA</h3>
-          <p>Diagnóstico, optimización y acompañamiento. Cada sesión cierra con un entregable concreto.</p>
+          <span class="servicio-tag">Precio cerrado</span>
+          <h3>Automatización</h3>
+          <p>Proyectos a medida con alcance y precio fijo. Conectamos tus herramientas y dejamos los procesos repetitivos andando solos.</p>
           <ul>
-            <li>Diagnóstico inicial (sesión única)</li>
-            <li>Sesiones individuales de 2 horas</li>
-            <li>Paquete mensual con prioridad</li>
-            <li>Confidencialidad absoluta</li>
+            <li>Reportes, integraciones y agentes IA</li>
+            <li>3 niveles según complejidad</li>
+            <li>Cotización formal sin costo</li>
+            <li>30 días de soporte post-entrega</li>
           </ul>
-          <div class="servicio-price"><span class="from">Desde</span>$35.000 CLP</div>
         </div>
 
         <div class="servicio-card featured reveal">
           <span class="servicio-num">02</span>
-          <span class="servicio-tag">Línea A · Más solicitado</span>
-          <h3>Capacitación IA</h3>
+          <span class="servicio-tag">Más solicitado</span>
+          <h3>Capacitación de uso de IA</h3>
           <p>Curso de 4 sesiones prácticas (8 horas totales) con datos y procesos reales de tu empresa.</p>
           <ul>
             <li>4 sesiones en vivo de 2 horas</li>
@@ -1719,102 +1819,20 @@
             <li>Soporte WhatsApp 30 días</li>
             <li>Plantillas y prompts a medida</li>
           </ul>
-          <div class="servicio-price"><span class="from">Desde</span>$240.000 CLP / curso</div>
         </div>
 
         <div class="servicio-card reveal">
           <span class="servicio-num">03</span>
-          <span class="servicio-tag">Línea C · Precio cerrado</span>
-          <h3>Proyectos de Automatización</h3>
-          <p>Encargos con alcance definido y precio fijo. Levantamiento de requerimientos sin costo.</p>
+          <span class="servicio-tag">Diseño + desarrollo</span>
+          <h3>Creación de páginas web</h3>
+          <p>Sitios a medida, rápidos y con buena estética. Desde landing pages hasta sitios corporativos con identidad propia.</p>
           <ul>
-            <li>3 niveles según complejidad</li>
-            <li>Reportes, integraciones y agentes IA</li>
-            <li>30 días de soporte post-entrega</li>
-            <li>Cotización formal antes de empezar</li>
+            <li>Diseño responsivo y moderno</li>
+            <li>Optimización SEO y velocidad</li>
+            <li>Integración con formularios y CRM</li>
+            <li>Capacitación para que la administres</li>
           </ul>
-          <div class="servicio-price"><span class="from">Desde</span>$400.000 CLP</div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ PROCESO ============ -->
-  <section class="proceso" id="proceso">
-    <div class="wrap">
-      <div class="row reveal">
-        <div>
-          <div class="section-num"><span class="meta">03 — Proceso</span></div>
-          <h2>Cuatro pasos,<br/><span class="it-soft">sin atajos</span>.</h2>
-        </div>
-        <div>
-          <p style="font-size: 1.1rem; color: var(--ink); max-width: 540px;">
-            Empezamos por entenderte. Después capacitamos. Después implementamos. Y nos quedamos un tiempo, hasta que el equipo lo haga solo.
-          </p>
-        </div>
-      </div>
-
-      <div class="pasos">
-        <div class="paso reveal">
-          <div class="paso-num">1</div>
-          <div class="paso-title">Conversamos sin compromiso</div>
-          <div class="paso-content"><p>Una reunión de 45 minutos para entender tu empresa, tu equipo y qué procesos te están consumiendo más tiempo. Sin presentaciones formales, sin propuesta cerrada todavía.</p></div>
-        </div>
-        <div class="paso reveal">
-          <div class="paso-num">2</div>
-          <div class="paso-title">Identificamos dónde la IA suma</div>
-          <div class="paso-content"><p>Te entregamos un diagnóstico con los procesos donde la IA puede generar valor real esta semana, este trimestre y este año. Y los procesos donde es mejor no usarla.</p></div>
-        </div>
-        <div class="paso reveal">
-          <div class="paso-num">3</div>
-          <div class="paso-title">Capacitamos a tu equipo</div>
-          <div class="paso-content"><p>Sesiones grupales o individuales, presenciales u online, con casos prácticos del rubro de tu empresa. Cero programación, cero jerga. Si no se entiende, no avanzamos.</p></div>
-        </div>
-        <div class="paso reveal">
-          <div class="paso-num">4</div>
-          <div class="paso-title">Acompañamos la implementación</div>
-          <div class="paso-content"><p>Las primeras semanas hay dudas, errores, descubrimientos. Estamos disponibles por WhatsApp y en sesiones de seguimiento mientras tu equipo se afianza.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ EN LA PRÁCTICA (process visuals) ============ -->
-  <section class="en-practica" id="practica">
-    <div class="wrap">
-      <div class="row reveal">
-        <div>
-          <div class="section-num"><span class="meta">04 — En la práctica</span></div>
-          <h2>La IA en tu<br/><span class="it">día a día</span>.</h2>
-        </div>
-        <div>
-          <p style="font-size: 1.1rem; color: var(--ink); max-width: 520px;">
-            Las herramientas que ya conoces — Excel, dashboards, reportes — funcionando más rápido y con más cabeza.
-          </p>
-        </div>
-      </div>
-
-      <div class="practica-grid reveal">
-        <article class="practica-card">
-          <img src="dashboard1.png" alt="Dashboard con IA" class="practica-card-img" />
-          <h4>Dashboards en vivo</h4>
-          <p>Métricas que se actualizan solas.</p>
-        </article>
-        <article class="practica-card">
-          <img src="chart.ai.png" alt="Análisis con IA" class="practica-card-img" />
-          <h4>Prompts inteligentes</h4>
-          <p>Pregúntale a tu data en lenguaje natural.</p>
-        </article>
-        <article class="practica-card">
-          <img src="analysis.png" alt="Análisis predictivo" class="practica-card-img" />
-          <h4>Tendencias automáticas</h4>
-          <p>Patrones detectados al instante.</p>
-        </article>
-        <article class="practica-card">
-          <img src="data-node.png" alt="Excel con IA" class="practica-card-img" />
-          <h4>Excel + IA</h4>
-          <p>Fórmulas en lenguaje natural.</p>
-        </article>
       </div>
     </div>
   </section>
@@ -1824,7 +1842,7 @@
     <div class="wrap">
       <div class="auto-header-grid reveal">
         <div>
-          <div class="section-num"><span class="meta">05 — Automatización</span></div>
+          <div class="section-num"><span class="meta">04 — Automatización</span></div>
           <h2>Proyectos a medida,<br/><span class="it">precio cerrado</span>.</h2>
           <p style="font-size: 1.1rem; color: var(--ink); max-width: 540px; margin-top: 1.5rem;">
             Define el alcance, te entregamos cotización formal sin costo, ejecutamos al precio fijo acordado. Sin sorpresas en la facturación.
@@ -1848,7 +1866,6 @@
             <li>Notificaciones automáticas</li>
             <li>Plantillas y triggers simples</li>
           </ul>
-          <div class="auto-price"><span class="from">Desde</span>$400.000 CLP</div>
         </div>
 
         <div class="auto-card featured">
@@ -1863,7 +1880,6 @@
             <li>Integraciones CRM / planillas</li>
             <li>Generación automática de documentos</li>
           </ul>
-          <div class="auto-price">$900.000 — $2.500.000 CLP</div>
         </div>
 
         <div class="auto-card">
@@ -1878,7 +1894,6 @@
             <li>Pipelines de datos en tiempo real</li>
             <li>Arquitecturas multi-sistema</li>
           </ul>
-          <div class="auto-price">$2.500.000 — $6.000.000 CLP</div>
         </div>
       </div>
 
@@ -1903,212 +1918,12 @@
     </div>
   </section>
 
-  <!-- ============ ÁREAS ============ -->
-  <section class="areas" id="areas">
-    <div class="wrap">
-      <div class="row reveal">
-        <div>
-          <div class="section-num"><span class="meta">06 — Áreas</span></div>
-          <h2>IA aplicada al<br/><span class="it-soft">trabajo real</span>.</h2>
-        </div>
-        <div>
-          <p style="font-size: 1.1rem; color: var(--ink); max-width: 520px;">
-            No te vamos a hablar de modelos ni redes neuronales. Te mostramos cómo la IA se mete en el día a día de cada área de tu empresa.
-          </p>
-        </div>
-      </div>
-
-      <div class="areas-list reveal">
-        <div class="area-row"><div class="area-num">/ 01</div><div class="area-name">Ventas</div><div class="area-desc">Prospección automatizada, seguimiento de leads y cierres más rápidos.</div><div class="area-arrow">↗</div></div>
-        <div class="area-row"><div class="area-num">/ 02</div><div class="area-name">Marketing</div><div class="area-desc">Generación de contenido, segmentación y análisis de campañas.</div><div class="area-arrow">↗</div></div>
-        <div class="area-row"><div class="area-num">/ 03</div><div class="area-name">RRHH</div><div class="area-desc">Filtros de CV, redacción de comunicados, evaluación de desempeño.</div><div class="area-arrow">↗</div></div>
-        <div class="area-row"><div class="area-num">/ 04</div><div class="area-name">Finanzas</div><div class="area-desc">Reportes automáticos, análisis de gastos, conciliaciones más rápidas.</div><div class="area-arrow">↗</div></div>
-        <div class="area-row"><div class="area-num">/ 05</div><div class="area-name">Operaciones</div><div class="area-desc">Documentación de procesos, manuales internos, planificación.</div><div class="area-arrow">↗</div></div>
-        <div class="area-row"><div class="area-num">/ 06</div><div class="area-name">Atención al cliente</div><div class="area-desc">Respuestas más rápidas, resolución de FAQs, asistentes internos.</div><div class="area-arrow">↗</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SOBRE ============ -->
-  <section class="sobre" id="sobre">
-    <div class="wrap">
-      <div class="row reveal">
-        <div>
-          <div class="section-num"><span class="meta">07 — Estudio</span></div>
-          <h2>Empezamos con un equipo que <span class="it-soft">no se atrevía</span>.</h2>
-        </div>
-        <div class="sobre-text">
-          <p>Después de capacitar a más de [X] ejecutivos chilenos entendimos algo: el problema no es la tecnología, es la pedagogía. Por eso creamos cadencIAsesorías — para que cualquier persona use la IA con la misma naturalidad con la que aprendió a usar el correo hace veinte años.</p>
-          <p class="sobre-signature">— Equipo cadencIAsesorías</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ TESTIMONIOS (auto-scroll carousel) ============ -->
-  <section class="testimonios" id="testimonios">
-    <div class="wrap testimonios-header reveal">
-      <span class="meta" style="color: var(--ink-faint);">Lo que dicen nuestros equipos</span>
-      <h2>Equipos reales,<br/><span class="it">resultados reales</span>.</h2>
-    </div>
-
-    <div class="testimonios-track-wrap">
-      <div class="testimonios-track">
-        <!-- Set 1 -->
-        <article class="testimonio-card">
-          <div class="testimonio-stars">★★★★★</div>
-          <p class="testimonio-quote">"Llegaron sin tecnicismos y nos enseñaron a usar la IA en nuestro día a día. El equipo se atrevió por primera vez."</p>
-          <div class="testimonio-foot">
-            <div class="testimonio-avatar a1">CM</div>
-            <div class="testimonio-meta">
-              <strong>Carolina M.</strong>
-              <span>Gerenta de Operaciones · Vortex</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonio-card">
-          <div class="testimonio-stars">★★★★★</div>
-          <p class="testimonio-quote">"Pasamos de generar reportes en 3 días a 30 minutos. La capacitación fue clarísima desde la primera sesión."</p>
-          <div class="testimonio-foot">
-            <div class="testimonio-avatar a2">PR</div>
-            <div class="testimonio-meta">
-              <strong>Pablo R.</strong>
-              <span>CFO · Nimbus</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonio-card">
-          <div class="testimonio-stars">★★★★★</div>
-          <p class="testimonio-quote">"Lo que más valoramos: nadie sintió que iba atrás. Todo el equipo entendió el ritmo."</p>
-          <div class="testimonio-foot">
-            <div class="testimonio-avatar a3">DH</div>
-            <div class="testimonio-meta">
-              <strong>Daniela H.</strong>
-              <span>Líder de RRHH · Prysma</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonio-card">
-          <div class="testimonio-stars">★★★★★</div>
-          <p class="testimonio-quote">"El diagnóstico inicial fue gratis y al punto. Después de eso, decidimos avanzar sin dudarlo."</p>
-          <div class="testimonio-foot">
-            <div class="testimonio-avatar a4">SO</div>
-            <div class="testimonio-meta">
-              <strong>Sebastián O.</strong>
-              <span>Director Comercial · Cirrus</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonio-card">
-          <div class="testimonio-stars">★★★★★</div>
-          <p class="testimonio-quote">"Nos automatizaron la generación de propuestas. Lo que tomaba 6 horas, ahora son 15 minutos."</p>
-          <div class="testimonio-foot">
-            <div class="testimonio-avatar a5">AV</div>
-            <div class="testimonio-meta">
-              <strong>Andrea V.</strong>
-              <span>Gerenta Comercial · Kynder</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonio-card">
-          <div class="testimonio-stars">★★★★★</div>
-          <p class="testimonio-quote">"La asesoría fue tan práctica que arrancamos a usar IA al día siguiente. Cero teoría innecesaria."</p>
-          <div class="testimonio-foot">
-            <div class="testimonio-avatar a6">FG</div>
-            <div class="testimonio-meta">
-              <strong>Felipe G.</strong>
-              <span>Fundador · Halcyn</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Set 2 (duplicated for seamless loop) -->
-        <article class="testimonio-card">
-          <div class="testimonio-stars">★★★★★</div>
-          <p class="testimonio-quote">"Llegaron sin tecnicismos y nos enseñaron a usar la IA en nuestro día a día. El equipo se atrevió por primera vez."</p>
-          <div class="testimonio-foot">
-            <div class="testimonio-avatar a1">CM</div>
-            <div class="testimonio-meta">
-              <strong>Carolina M.</strong>
-              <span>Gerenta de Operaciones · Vortex</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonio-card">
-          <div class="testimonio-stars">★★★★★</div>
-          <p class="testimonio-quote">"Pasamos de generar reportes en 3 días a 30 minutos. La capacitación fue clarísima desde la primera sesión."</p>
-          <div class="testimonio-foot">
-            <div class="testimonio-avatar a2">PR</div>
-            <div class="testimonio-meta">
-              <strong>Pablo R.</strong>
-              <span>CFO · Nimbus</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonio-card">
-          <div class="testimonio-stars">★★★★★</div>
-          <p class="testimonio-quote">"Lo que más valoramos: nadie sintió que iba atrás. Todo el equipo entendió el ritmo."</p>
-          <div class="testimonio-foot">
-            <div class="testimonio-avatar a3">DH</div>
-            <div class="testimonio-meta">
-              <strong>Daniela H.</strong>
-              <span>Líder de RRHH · Prysma</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonio-card">
-          <div class="testimonio-stars">★★★★★</div>
-          <p class="testimonio-quote">"El diagnóstico inicial fue gratis y al punto. Después de eso, decidimos avanzar sin dudarlo."</p>
-          <div class="testimonio-foot">
-            <div class="testimonio-avatar a4">SO</div>
-            <div class="testimonio-meta">
-              <strong>Sebastián O.</strong>
-              <span>Director Comercial · Cirrus</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonio-card">
-          <div class="testimonio-stars">★★★★★</div>
-          <p class="testimonio-quote">"Nos automatizaron la generación de propuestas. Lo que tomaba 6 horas, ahora son 15 minutos."</p>
-          <div class="testimonio-foot">
-            <div class="testimonio-avatar a5">AV</div>
-            <div class="testimonio-meta">
-              <strong>Andrea V.</strong>
-              <span>Gerenta Comercial · Kynder</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="testimonio-card">
-          <div class="testimonio-stars">★★★★★</div>
-          <p class="testimonio-quote">"La asesoría fue tan práctica que arrancamos a usar IA al día siguiente. Cero teoría innecesaria."</p>
-          <div class="testimonio-foot">
-            <div class="testimonio-avatar a6">FG</div>
-            <div class="testimonio-meta">
-              <strong>Felipe G.</strong>
-              <span>Fundador · Halcyn</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ FAQ ============ -->
   <section class="faq" id="faq">
     <div class="wrap">
       <div class="row reveal">
         <div>
-          <div class="section-num"><span class="meta">08 — Preguntas</span></div>
+          <div class="section-num"><span class="meta">05 — Preguntas</span></div>
           <h2>Lo que más nos<br/><span class="it">preguntan</span>.</h2>
         </div>
         <div></div>
@@ -2155,8 +1970,8 @@
           Agenda diagnóstico
           <span class="arrow">→</span>
         </a>
-        <a href="https://wa.me/56900000000" target="_blank" rel="noopener" class="btn-atm btn-atm-ghost">
-          WhatsApp directo
+        <a href="mailto:cadenciasesorias@gmail.com" class="btn-atm btn-atm-ghost">
+          Escríbenos
         </a>
       </div>
     </div>
@@ -2166,7 +1981,7 @@
   <section class="contacto" id="contacto">
     <div class="wrap">
       <div class="reveal">
-        <div class="section-num"><span class="meta">09 — Conversemos</span></div>
+        <div class="section-num"><span class="meta">06 — Conversemos</span></div>
         <h2 class="contacto-h">Empieza con un <span class="it">diagnóstico</span> gratuito.</h2>
       </div>
 
@@ -2176,29 +1991,25 @@
             45 minutos. Sin presentaciones rebuscadas. Solo conversamos qué hacen, qué les está pesando, y si la IA puede ayudar.
           </p>
 
-          <a href="https://wa.me/56900000000" target="_blank" rel="noopener" class="contact-method">
-            <div class="contact-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#1C1A17"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-            </div>
-            <div>
-              <strong>WhatsApp</strong>
-              <span>+56 9 0000 0000 — Respuesta en horario hábil</span>
-            </div>
-          </a>
-
-          <a href="mailto:hola@cadenciasesorias.cl" class="contact-method">
+          <a href="mailto:cadenciasesorias@gmail.com" class="contact-method">
             <div class="contact-icon">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C1A17" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
             </div>
             <div>
               <strong>Correo</strong>
-              <span>hola@cadenciasesorias.cl</span>
+              <span>cadenciasesorias@gmail.com</span>
             </div>
           </a>
         </div>
 
         <div class="reveal">
-          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+          <form id="contactForm" action="https://formsubmit.co/cadenciasesorias@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="Nuevo contacto desde cadencIAsesorías" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_next" value="https://cadenciasesorias.cl/?enviado=1" />
+            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
             <div class="field"><label for="nombre">Nombre</label><input type="text" id="nombre" name="nombre" required /></div>
             <div class="field"><label for="empresa">Empresa</label><input type="text" id="empresa" name="empresa" /></div>
             <div class="field"><label for="email">Correo</label><input type="email" id="email" name="email" required /></div>
@@ -2217,15 +2028,11 @@
       <div class="footer-display">cadenc<span class="it">IA</span>—</div>
       <div class="footer-meta">
         <div>© 2026 — Santiago, Chile</div>
-        <div><a href="#contacto">hola@cadenciasesorias.cl</a></div>
+        <div><a href="#contacto">cadenciasesorias@gmail.com</a></div>
         <div>Hecho con cuidado, al ritmo de tu gente.</div>
       </div>
     </div>
   </footer>
-
-  <a href="https://wa.me/56900000000" target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp">
-    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.002-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-  </a>
 
   <script>
     // Custom cursor
@@ -2291,14 +2098,7 @@
     toggle?.addEventListener('click', () => links.classList.toggle('open'));
     links?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
 
-    // Form
-    const form = document.getElementById('contactForm');
-    form?.addEventListener('submit', (e) => {
-      if (form.action.includes('YOUR_FORM_ID')) {
-        e.preventDefault();
-        alert('¡Recibido! Recuerda configurar Formspree y reemplazar YOUR_FORM_ID en el código.');
-      }
-    });
+    // Form — FormSubmit envía directo a cadenciasesorias@gmail.com
 
     // Cinematic hero — seamless video loop with rAF fade
     (function () {
