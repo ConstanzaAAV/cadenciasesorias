@@ -2060,17 +2060,17 @@
         </div>
 
         <div class="reveal">
-          <form id="contactForm" action="https://formsubmit.co/contacto@cadenciaia.com" method="POST">
-            <input type="hidden" name="_subject" value="Nuevo contacto desde cadencIAsesorías" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_next" value="https://cadenciasesorias.cl/?enviado=1" />
-            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+          <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="7befec71-9352-497d-9cfe-b6f114ba7134" />
+            <input type="hidden" name="subject" value="Nuevo contacto desde cadencIAsesorías" />
+            <input type="hidden" name="from_name" value="cadencIAsesorías · Formulario web" />
+            <input type="hidden" name="redirect" value="https://cadenciaia.com/?enviado=1" />
+            <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
 
-            <div class="field"><label for="nombre">Nombre</label><input type="text" id="nombre" name="nombre" required /></div>
+            <div class="field"><label for="nombre">Nombre</label><input type="text" id="nombre" name="name" required /></div>
             <div class="field"><label for="empresa">Empresa</label><input type="text" id="empresa" name="empresa" /></div>
             <div class="field"><label for="email">Correo</label><input type="email" id="email" name="email" required /></div>
-            <div class="field"><label for="mensaje">Cuéntanos brevemente</label><textarea id="mensaje" name="mensaje" placeholder="Tamaño del equipo, áreas, qué buscan resolver..." required></textarea></div>
+            <div class="field"><label for="mensaje">Cuéntanos brevemente</label><textarea id="mensaje" name="message" placeholder="Tamaño del equipo, áreas, qué buscan resolver..." required></textarea></div>
             <button type="submit" class="submit-btn">Enviar mensaje →</button>
             <p class="form-note">Respondemos en menos de 24 horas hábiles.</p>
           </form>
@@ -2160,7 +2160,7 @@
     toggle?.addEventListener('click', () => links.classList.toggle('open'));
     links?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
 
-    // Form — FormSubmit envía directo a contacto@cadenciaia.com
+    // Form — Web3Forms envía a contacto@cadenciaia.com (Cloudflare lo reenvía al correo personal)
 
     // Cinematic hero — seamless video loop with rAF fade
     (function () {
